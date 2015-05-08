@@ -31,9 +31,11 @@ import (
 // event happens between the end of the first watch command and the start
 // of the second command.
 type watcherHub struct {
+	// n.b. - this 64-bit value MUST be at the top to enforce alignment
+	//        necessary for 32-bit systems
+        count        int64 // current number of watchers.
 	mutex        sync.Mutex
 	watchers     map[string]*list.List
-	count        int64 // current number of watchers.
 	EventHistory *EventHistory
 }
 
